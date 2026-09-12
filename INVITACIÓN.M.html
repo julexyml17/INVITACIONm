@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Una pregunta especial para ti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5, #e3f2fd);
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 35px 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(216, 112, 147, 0.2);
+            text-align: center;
+            max-width: 380px;
+            width: 100%;
+            border: 2px solid #f8bbd0;
+            position: relative;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #d81b60;
+            margin-bottom: 20px;
+        }
+
+        .instruction {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Contenedor de la huella de piecitos interactiva */
+        .fingerprint-container {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 30px auto;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff0f5;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.15);
+            border: 2px dashed #f48fb1;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .fingerprint-container:hover {
+            transform: scale(1.05);
+            background: #ffebee;
+        }
+
+        .fingerprint-container:active {
+            transform: scale(0.95);
+        }
+
+        .fingerprint-icon {
+            font-size: 3.2rem;
+            user-select: none;
+            /* Filtro para darles el tono rosita tierno */
+            filter: drop-shadow(0 2px 5px rgba(216, 27, 96, 0.3)) sepia(100%) hue-rotate(300deg) saturate(300%) brightness(1.1);
+        }
+
+        /* Sección Oculta / Revelada */
+        .hidden-message {
+            display: none;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .hidden-message h2 {
+            font-size: 1.4rem;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hidden-message p {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-whatsapp.no {
+            background-color: #e57373;
+            box-shadow: 0 4px 15px rgba(229, 115, 115, 0.4);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <div class="subtitle">Alguien muy pequeñita tiene una duda...</div>
+        
+        <h1 id="mainTitle">Una gran pregunta</h1>
+
+        <!-- Estado Inicial: Piecitos en rosita -->
+        <div id="initialState">
+            <p class="instruction">Presiona la huella con tu dedo para descubrir el mensaje</p>
+            <div class="fingerprint-container" onclick="revealMessage()" title="Presiona aquí">
+                <span class="fingerprint-icon">👣</span>
+            </div>
+        </div>
+
+        <!-- Estado Final: Pregunta Revelada -->
+        <div id="hiddenMessage" class="hidden-message">
+            <p>"Hola tía, todavía soy muy pequeñita para hablar… pero mi corazón ya sabe que quiero que seas mi madrina."</p>
+            
+            <h2>¿Aceptas acompañarme en esta aventura de la vida? 🍼✨</h2>
+            
+            <!-- Botón Sí -->
+            <a href="https://wa.me/593964015708?text=¡Acepto totalmente!%20" class="btn-whatsapp" target="_blank">
+                ¡Sí, acepto! 💖
+            </a>
+
+            <!-- Botón No -->
+            <a href="https://wa.me/593964015708?text=Lo%20siento%20no%20puedo%20aceptar%20ser%20su%20madrina%20" class="btn-whatsapp no" target="_blank">
+                ¡No acepto! 💔
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function revealMessage() {
+            document.getElementById('mainTitle').style.display = 'none'; // Oculta el título "Una gran pregunta"
+            document.getElementById('initialState').style.display = 'none'; // Oculta los piecitos
+            document.getElementById('hiddenMessage').style.display = 'block'; // Muestra el mensaje final y los botones
+        }
+    </script>
+
+</body>
+</html>
